@@ -1,5 +1,5 @@
 {
-    "name": "jessicadigital/social-feed", 
+    "name": "kuzyk/social-feed",
     "type": "library",
     "description": "Get feeds from different social networks in a unified format",
     "keywords": ["social"],
@@ -13,8 +13,8 @@
         }
     ],
     "support": {
-        "source": "https://github.com/jessicadigital/social-feed",
-        "issues": "https://github.com/jessicadigital/social-feed/issues"
+        "source": "https://github.com/kuzyk/social-feed",
+        "issues": "https://github.com/kuzyk/social-feed/issues"
     },
     "require": {
         "php": ">=5.4.0",
