@@ -28,7 +28,6 @@ class TwitterItem extends Item {
         $this->link = 'https://twitter.com/'.$user->handle.'/status/'.$this->id;
         $this->text = $data->text;
         $this->livetext = $this->linkify($data->text);
-
         $media = new Generic(null);
         if (!empty($data->extended_entities->media)) {
             $img = $data->extended_entities->media[0];
@@ -46,7 +45,7 @@ class TwitterItem extends Item {
         }
 
         $this->user = $user;
-        if (!empty($media) && !empty($media->image) && !empty($media->video)) {
+        if (!empty($media->image) || !empty($media->video)) {
             $this->media = $media;
         }
     }
