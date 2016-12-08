@@ -3,10 +3,11 @@
 namespace JessicaDigital\SocialFeed\Items;
 
 use JessicaDigital\SocialFeed\Items\User;
+use JessicaDigital\SocialFeed\Media\Generic;
 
 class TwitterItem extends Item {
     public $service = 'twitter';
-    
+
     public function __construct($data) {
         $user = new User();
         $this->id = $data->id;
@@ -30,7 +31,7 @@ class TwitterItem extends Item {
 
         if (!empty($data->extended_entities->media)) {
             $img = $data->extended_entities->media[0];
-            $this->media = $img->media_url_https;
+            $media = new Generic($img->media_url_https);
         }
 
         if (isset($data->entities->urls)) {
@@ -44,11 +45,11 @@ class TwitterItem extends Item {
         }
 
         $this->user = $user;
-        if (!empty($media->image) && !empty($media->video)) {
+        if (!empty($media) && !empty($media->image) && !empty($media->video)) {
             $this->media = $media;
         }
     }
-    
+
     /* Linkify Twitter Status
      * Inspiration from https://davidwalsh.name/linkify-twitter-feed
      */
