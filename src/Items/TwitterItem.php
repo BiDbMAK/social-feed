@@ -29,9 +29,10 @@ class TwitterItem extends Item {
         $this->text = $data->text;
         $this->livetext = $this->linkify($data->text);
 
+        $media = new Generic(null);
         if (!empty($data->extended_entities->media)) {
             $img = $data->extended_entities->media[0];
-            $media = new Generic($img->media_url_https);
+            $media->image = $img->media_url_https;
         }
 
         if (isset($data->entities->urls)) {
