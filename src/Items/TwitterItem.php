@@ -2,13 +2,14 @@
 
 namespace JessicaDigital\SocialFeed\Items;
 
-use JessicaDigital\SocialFeed\Items\User;
 use JessicaDigital\SocialFeed\Media\Generic;
 
-class TwitterItem extends Item {
+class TwitterItem extends Item
+{
     public $service = 'twitter';
 
-    public function __construct($data) {
+    public function __construct($data)
+    {
         $user = new User();
         $this->id = $data->id;
         $this->created = strtotime($data->created_at);
@@ -25,22 +26,22 @@ class TwitterItem extends Item {
             $user->link = $data->user->url;
             $user->name = $data->user->name;
         }
-        $this->link = 'https://twitter.com/'.$user->handle.'/status/'.$this->id;
+        $this->link = 'https://twitter.com/' . $user->handle . '/status/' . $this->id;
         $this->text = $data->text;
         $this->livetext = $this->linkify($data->text);
         $media = new Generic(null);
         if (!empty($data->extended_entities->media)) {
             $img = $data->extended_entities->media[0];
             $media->image = $img->media_url_https;
-        }
-
-        if (isset($data->entities->urls)) {
-            foreach ($data->entities->urls as $url) {
-                $parsed = $this->mediaFromUrl($url->expanded_url);
-                if (!empty($parsed->image) || !empty($parsed->video->id)) {
-                    $media = $parsed;
+        } else {
+            if (isset($data->entities->urls)) {
+                foreach ($data->entities->urls as $url) {
+                    $parsed = $this->mediaFromUrl($url->expanded_url);
+                    if (!empty($parsed->image) || !empty($parsed->video->id)) {
+                        $media = $parsed;
+                    }
+                    break;
                 }
-                break;
             }
         }
 
@@ -53,7 +54,8 @@ class TwitterItem extends Item {
     /* Linkify Twitter Status
      * Inspiration from https://davidwalsh.name/linkify-twitter-feed
      */
-    public function linkify($text) {
+    public function linkify($text)
+    {
         // linkify URLs
         $text = preg_replace(
             '/(https?:\/\/\S+)/',
