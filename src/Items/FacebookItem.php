@@ -27,7 +27,7 @@ class FacebookItem extends Item {
         $user->name = $data->from->name;
         $this->user = $user;
 
-        if (!empty($data->picture)) {
+        if (!empty($data->full_picture)) {
             $this->media = new Facebook($data->full_picture);
         }
     }
