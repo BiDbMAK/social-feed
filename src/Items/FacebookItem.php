@@ -2,7 +2,6 @@
 
 namespace JessicaDigital\SocialFeed\Items;
 
-use JessicaDigital\SocialFeed\Items\User;
 use JessicaDigital\SocialFeed\Media\Facebook;
 
 class FacebookItem extends Item {
@@ -16,7 +15,10 @@ class FacebookItem extends Item {
         $this->comments = $data->comments->summary->total_count;
         $this->created = strtotime($data->created_time);
         $this->likes = $data->likes->summary->total_count;
-        $this->link = 'http://www.facebook.com/permalink.php?id='.$data->from->id.'&v=wall&story_fbid='.$data->id;
+
+        $ids = explode('_', $data->id);
+        $this->link = 'http://www.facebook.com/' . $ids[0] . '/posts/' . $ids[1];
+
         $this->livetext = $this->linkify($data->message);
         $this->text = $data->message;
 
